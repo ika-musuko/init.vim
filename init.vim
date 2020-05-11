@@ -61,9 +61,9 @@ set ttimeoutlen=100 " less esc key lag
 
 " indenting
 set expandtab
-set tabstop=4
-set shiftwidth=4
-autocmd Filetype html, dart, js, css setlocal ts=2 sw=2 expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " permanent undo
 set undodir=~/.vimdid

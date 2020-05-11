@@ -11,6 +11,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'natebosch/vim-lsc'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-buftabline'
+Plug 'Chiel92/vim-autoformat'
 
 " flutter
 Plug 'dart-lang/dart-vim-plugin'
@@ -47,7 +48,10 @@ nmap <silent> gr <Plug>(coc-references)
 
 " fzf
 nnoremap <leader>f :Files<cr>
-nnoremap <leader>r :Rg<cr>
+nnoremap <leader>r :Rg
+
+" autoformat on save
+au BufWrite * :Autoformat
 
 " main settings
 filetype plugin indent on
@@ -84,19 +88,16 @@ set splitbelow
 set splitright
 
 " buffer related
-map <leader>[ :bp<CR>
-map <leader>] :bn<CR>
+map <leader>[ :bp!<CR>
+map <leader>] :bn!<CR>
 map <leader>q :bd<CR>
 map <leader>l :ls<CR>
-nnoremap <C-S> :wall<CR>
-noremap <C-N> :Lex<CR>
-noremap! <C-N> :Lex<CR>
-noremap <leader>e :Ex<CR>
-noremap! <leader>e :Ex<CR>
-noremap <leader>s :Sex<CR>
-noremap! <leader>s :Sex<CR>
-noremap <leader><space> za
-nnoremap <leader>g :e <cfile><cr>
-nnoremap <leader>% :e %<cr>
+map <C-S> :wall<CR>
+map <leader>n :Lex<CR>
+map <leader>e :Ex<CR>
+map <leader>s :Sex<CR>
+map <leader><space> za
+nmap <leader>g :e <cfile><cr>
+nmap <leader>% :e %<cr>
 
 

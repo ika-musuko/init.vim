@@ -33,7 +33,11 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rn  <Plug>(coc-rename)
+nmap <leader>e[  <Plug>(coc-diagnostic-prev-error)
+nmap <leader>e]  <Plug>(coc-diagnostic-next-error)
+nmap <leader>w[  <Plug>(coc-diagnostic-prev)
+nmap <leader>w]  <Plug>(coc-diagnostic-next)
 
 " fzf
 nnoremap <leader>f :Files<cr>
@@ -74,6 +78,7 @@ command! -nargs=1 Tab set expandtab ts=<args> sw=<args> ai " set custom tab with
 command! W :w
 command! Q :q
 command! Reload :so ~/.config/nvim/init.vim
+command! BufOnly execute '%bdelete|edit #|normal `"'
 
 " normal split creation
 set splitbelow
@@ -84,12 +89,15 @@ map <leader>[ :bp!<CR>
 map <leader>] :bn!<CR>
 map <leader>q :bd<CR>
 map <leader>l :ls<CR>
+map <leader>bo :BufOnly<CR>
 map <C-S> :wall<CR>
+
+" netrw
 map <leader>n :Lex<CR>
 map <leader>e :Ex<CR>
 map <leader>s :Sex<CR>
+
+" folds
 map <leader><space> za
-nmap <leader>g :e <cfile><cr>
-nmap <leader>% :e %<cr>
 
 

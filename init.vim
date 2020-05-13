@@ -40,8 +40,9 @@ nmap <leader>w[  <Plug>(coc-diagnostic-prev)
 nmap <leader>w]  <Plug>(coc-diagnostic-next)
 
 " fzf
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>r :Rg
+map <leader>f :Files<cr>
+map <leader>r :Lines<cr>
+map <leader>p :Buffers<cr>
 
 " autoformat on save
 au BufWrite *.dart :Autoformat
@@ -57,11 +58,11 @@ set hlsearch        " highlight searches
 set encoding=utf8
 set fileencodings=utf8
 set autoindent
-
 set ls=2            " always show status line
 set number
 set relativenumber
 set ttimeoutlen=100 " less esc key lag
+set mouse=a
 
 " indenting
 set expandtab
@@ -85,17 +86,17 @@ set splitbelow
 set splitright
 
 " buffer related
-map <leader>[ :bp!<CR>
-map <leader>] :bn!<CR>
-map <leader>q :bd<CR>
-map <leader>l :ls<CR>
-map <leader>bo :BufOnly<CR>
-map <C-S> :wall<CR>
+map <leader>[ :bp!<cr>
+map <leader>] :bn!<cr>
+map <leader>q :bd<cr>
+map <leader>l :ls<cr>
+map <leader>bo :BufOnly<cr>
+map <C-S> :wall<cr>
 
 " netrw
-map <leader>n :Lex<CR>
-map <leader>e :Ex<CR>
-map <leader>s :Sex<CR>
+map <leader>n :Lex<cr>
+map <leader>e :Ex<cr>
+map <leader>s :Sex<cr>
 
 " folds
 map <leader><space> za

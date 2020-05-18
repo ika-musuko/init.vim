@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 
 " general
+Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -11,6 +12,11 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-buftabline'
 Plug 'Chiel92/vim-autoformat'
+Plug 'tpope/vim-fugitive'
+Plug 'djoshea/vim-autoread'
+
+" v
+Plug 'NoorWachid/VimVLanguage'
 
 " flutter
 Plug 'dart-lang/dart-vim-plugin'
@@ -38,6 +44,12 @@ nmap <leader>e[  <Plug>(coc-diagnostic-prev-error)
 nmap <leader>e]  <Plug>(coc-diagnostic-next-error)
 nmap <leader>w[  <Plug>(coc-diagnostic-prev)
 nmap <leader>w]  <Plug>(coc-diagnostic-next)
+nmap <leader>ld  <Plug>(coc-list-diagnostics)
+
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
 " fzf
 map <leader>f :Files<cr>
@@ -45,7 +57,7 @@ map <leader>r :Lines<cr>
 map <leader>p :Buffers<cr>
 
 " autoformat on save
-au BufWrite *.dart :Autoformat
+autocmd BufWrite *.dart Autoformat
 
 " main settings
 filetype plugin indent on
@@ -63,6 +75,7 @@ set number
 set relativenumber
 set ttimeoutlen=100 " less esc key lag
 set mouse=a
+set clipboard+=unnamedplus
 
 " indenting
 set expandtab

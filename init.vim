@@ -11,9 +11,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-buftabline'
-Plug 'Chiel92/vim-autoformat'
 Plug 'tpope/vim-fugitive'
 Plug 'djoshea/vim-autoread'
+
+" autoformat
+Plug 'Chiel92/vim-autoformat'
 
 " v
 Plug 'NoorWachid/VimVLanguage'
@@ -58,6 +60,8 @@ map <leader>p :Buffers<cr>
 
 " autoformat on save
 autocmd BufWrite *.dart Autoformat
+autocmd BufWrite *.c,*.cpp,*.h,*.hpp Autoformat | silent exec "!rm tags && ctags -R *.c *.cpp *.h *.hpp"
+
 
 " main settings
 filetype plugin indent on
@@ -79,9 +83,13 @@ set clipboard+=unnamedplus
 
 " indenting
 set expandtab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
+autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4
+autocmd FileType lua   setlocal ts=4 sts=4 sw=4
+
+autocmd FileType dart        setlocal ts=2 sts=2 sw=2
+autocmd FileType html        setlocal ts=2 sts=2 sw=2
+autocmd FileType css         setlocal ts=2 sts=2 sw=2
+autocmd FileType javascript  setlocal ts=2 sts=2 sw=2
 
 " permanent undo
 set undodir=~/.vimdid
@@ -115,3 +123,5 @@ map <leader>s :Sex<cr>
 map <leader><space> za
 
 
+" turn off highlight
+nnoremap <silent><Return> :noh<cr><Return>

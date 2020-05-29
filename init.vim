@@ -12,13 +12,11 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-fugitive'
+Plug 'danro/rename.vim'
 Plug 'djoshea/vim-autoread'
 
 " autoformat
 Plug 'Chiel92/vim-autoformat'
-
-" v
-Plug 'NoorWachid/VimVLanguage'
 
 " flutter
 Plug 'dart-lang/dart-vim-plugin'
@@ -32,6 +30,11 @@ set t_ut=
 set termguicolors
 hi Normal guibg=NONE ctermbg=NONE
 set background=dark
+hi default link BufTabLineCurrent TabLineSel
+hi default link BufTabLineActive  Pmenu
+hi default link BufTabLineHidden  TabLine
+hi default link BufTabLineFill    TabLineFill
+
 
 " plugin-specific
 map <leader>u :UndotreeToggle<cr>
@@ -61,7 +64,6 @@ map <leader>p :Buffers<cr>
 " autoformat on save
 autocmd BufWrite *.dart Autoformat
 autocmd BufWrite *.c,*.cpp,*.h,*.hpp Autoformat | silent exec "!rm tags && ctags -R *.c *.cpp *.h *.hpp"
-
 
 " main settings
 filetype plugin indent on
@@ -102,26 +104,33 @@ command! Q :q
 command! Reload :so ~/.config/nvim/init.vim
 command! BufOnly execute '%bdelete|edit #|normal `"'
 
-" normal split creation
+" split settings
 set splitbelow
 set splitright
+noremap <C-H> <C-W><C-H>
+noremap <C-J> <C-W><C-J>
+noremap <C-K> <C-W><C-K>
+noremap <C-L> <C-W><C-L>
+inoremap <C-H> <C-W><C-H>
+inoremap <C-J> <C-W><C-J>
+inoremap <C-K> <C-W><C-K>
+inoremap <C-L> <C-W><C-L>
 
 " buffer related
-map <leader>[ :bp!<cr>
-map <leader>] :bn!<cr>
-map <leader>q :bd<cr>
-map <leader>l :ls<cr>
-map <leader>bo :BufOnly<cr>
-map <C-S> :wall<cr>
+noremap <leader>[ :bp!<cr>
+noremap <leader>] :bn!<cr>
+noremap <C-Q> :bd<cr>
+noremap <leader>l :ls<cr>
+noremap <leader>bo :BufOnly<cr>
+noremap <C-S> :wall<cr>
 
 " netrw
-map <leader>n :Lex<cr>
-map <leader>e :Ex<cr>
-map <leader>s :Sex<cr>
+noremap <leader>n :Lex<cr>
+noremap <leader>e :Ex<cr>
+noremap <leader>s :Sex<cr>
 
 " folds
-map <leader><space> za
-
+noremap <leader><space> za
 
 " turn off highlight
 nnoremap <silent><Return> :noh<cr><Return>

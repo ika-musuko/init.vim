@@ -9,7 +9,9 @@ Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if executable('dart')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-fugitive'
 Plug 'danro/rename.vim'
@@ -63,7 +65,7 @@ map <leader>p :Buffers<cr>
 
 " autoformat on save
 autocmd BufWrite *.dart Autoformat
-autocmd BufWrite *.c,*.cpp,*.h,*.hpp Autoformat | silent exec "!rm tags && ctags -R *.c *.cpp *.h *.hpp"
+autocmd BufWrite *.c,*.h,*.cpp,*.hpp silent !rm tags; ctags -R *
 
 " main settings
 filetype plugin indent on
@@ -82,11 +84,12 @@ set relativenumber
 set ttimeoutlen=100 " less esc key lag
 set mouse=a
 set clipboard+=unnamedplus
+set ts=4 sts=4 sw=4
 
 " indenting
 set expandtab
-autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4
-autocmd FileType lua   setlocal ts=4 sts=4 sw=4
+autocmd FileType c,cpp       setlocal ts=4 sts=4 sw=4
+autocmd FileType lua         setlocal ts=4 sts=4 sw=4
 
 autocmd FileType dart        setlocal ts=2 sts=2 sw=2
 autocmd FileType html        setlocal ts=2 sts=2 sw=2
@@ -103,14 +106,22 @@ command! W :w
 command! Q :q
 command! Reload :so ~/.config/nvim/init.vim
 command! BufOnly execute '%bdelete|edit #|normal `"'
+function RelativeToggle()
+    if &relativenumber ==# "norelativenumber"
+        set relativenumber
+    else
+        set norelativenumber
+    endif
+endfunction
+noremap  <silent><F10> :call RelativeToggle()<cr>
 
 " split settings
 set splitbelow
 set splitright
-noremap <C-H> <C-W><C-H>
-noremap <C-J> <C-W><C-J>
-noremap <C-K> <C-W><C-K>
-noremap <C-L> <C-W><C-L>
+noremap  <C-H> <C-W><C-H>
+noremap  <C-J> <C-W><C-J>
+noremap  <C-K> <C-W><C-K>
+noremap  <C-L> <C-W><C-L>
 inoremap <C-H> <C-W><C-H>
 inoremap <C-J> <C-W><C-J>
 inoremap <C-K> <C-W><C-K>
@@ -133,4 +144,5 @@ noremap <leader>s :Sex<cr>
 noremap <leader><space> za
 
 " turn off highlight
-nnoremap <silent><Return> :noh<cr><Return>
+nnoremap <silent><Return>       :noh<cr><Return>
+nnoremap <silent><S-Return>     :noh<cr>

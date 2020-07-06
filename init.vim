@@ -1,14 +1,14 @@
 call plug#begin('~/.vim/plugged')
 " looks
-Plug 'chriskempson/base16-vim'
+Plug 'ika-musuko/vim-sublime-monokai'
 
-" general
+" general'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-rooter'
+Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'jremmen/vim-ripgrep'
 if executable('dart')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
@@ -16,17 +16,14 @@ Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-fugitive'
 Plug 'danro/rename.vim'
 Plug 'djoshea/vim-autoread'
-
-" autoformat
+Plug 'preservim/nerdtree'
 Plug 'Chiel92/vim-autoformat'
-
-" flutter
 Plug 'dart-lang/dart-vim-plugin'
 
 call plug#end()
 
 " looks
-colorscheme base16-default-dark
+colorscheme sublimemonokai
 set t_Co=256
 set t_ut=
 set termguicolors
@@ -37,21 +34,16 @@ hi default link BufTabLineActive  Pmenu
 hi default link BufTabLineHidden  TabLine
 hi default link BufTabLineFill    TabLineFill
 
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
-" plugin-specific
-map <leader>u :UndotreeToggle<cr>
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>ac  <Plug>(coc-codeaction)
-nmap <leader>qf  <Plug>(coc-fix-current)
-nmap <leader>rn  <Plug>(coc-rename)
-nmap <leader>e[  <Plug>(coc-diagnostic-prev-error)
-nmap <leader>e]  <Plug>(coc-diagnostic-next-error)
-nmap <leader>w[  <Plug>(coc-diagnostic-prev)
-nmap <leader>w]  <Plug>(coc-diagnostic-next)
-nmap <leader>ld  <Plug>(coc-list-diagnostics)
+let g:NERDTreeWinPos = "right"
+
 
 " lightline
 let g:lightline = {
@@ -59,17 +51,46 @@ let g:lightline = {
       \ }
 
 " fzf
-map <leader>f :Files<cr>
-map <leader>r :Lines<cr>
-map <leader>p :Buffers<cr>
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-" autoformat on save
+" dart
 autocmd BufWrite *.dart Autoformat
-autocmd BufWrite *.c,*.h,*.cpp,*.hpp silent !rm tags; ctags -R *
+
+" c++
+"autocmd BufRead  *.c,*.h,*.cpp,*.hpp silent CocDisable
+autocmd BufWrite *.c,*.h,*.cpp,*.hpp silent !ctags -R *
+
+" keybindings plugin-specific
+noremap <leader>u :UndotreeToggle<cr>
+noremap <C-n> :NERDTreeToggle<cr>
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+nnoremap <leader>ac  <Plug>(coc-codeaction)
+nnoremap <leader>qf  <Plug>(coc-fix-current)
+nnoremap <leader>rn  <Plug>(coc-rename)
+nnoremap <leader>e[  <Plug>(coc-diagnostic-prev-error)
+nnoremap <leader>e]  <Plug>(coc-diagnostic-next-error)
+nnoremap <leader>w[  <Plug>(coc-diagnostic-prev)
+nnoremap <leader>w]  <Plug>(coc-diagnostic-next)
+nnoremap <leader>ld  <Plug>(coc-list-diagnostics)
+noremap <leader>f :Files<cr>
+noremap <C-F> :RG<cr>
+noremap <C-P> :GFiles<cr>
+noremap <leader>r :Lines<cr>
+noremap <leader>p :Buffers<cr>
 
 " main settings
 filetype plugin indent on
-syntax enable
+syntax on
 set showcmd         " see command as it's being typed
 set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
@@ -85,6 +106,7 @@ set ttimeoutlen=100 " less esc key lag
 set mouse=a
 set clipboard+=unnamedplus
 set ts=4 sts=4 sw=4
+set tags=~/.mytags
 
 " indenting
 set expandtab
